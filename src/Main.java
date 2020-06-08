@@ -9,6 +9,7 @@ public class Main {
         System.out.println("***** Proyecto Asteroide *****");
         System.out.println("***** 4to commit *****");
         System.out.println("***** 4°A *****");
+        System.out.println("Listo");
 
     }
 }
