@@ -7,5 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("***** Proyecto Asteroide *****");
+        System.out.println("***** 2do commit *****");
     }
 }
