@@ -8,7 +8,7 @@ public class Bullet extends Flying_Obj{
     // public String laserSound;
 
     public Bullet(int shipAngle, int shipX, int shipY) throws IOException {
-        super("", 30); //sustituir img por imagen
+        super("src/img/ovni.png", 30); //sustituir img por imagen
         this.life = 60;
         this.speed = 10;
         this.angle = shipAngle + 90;

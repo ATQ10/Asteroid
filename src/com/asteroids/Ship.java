@@ -1,6 +1,7 @@
 package com.asteroids;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Ship extends Flying_Obj{
     // public String sound;
@@ -8,10 +9,27 @@ public class Ship extends Flying_Obj{
     public final float THRUST_AMOUNT = 0.25f;
 
     public Ship() {
-        super("", 30);
+        super("src/com/img/ovni.png", 30);
         this.angle = 1;
         this.center.x = (AsteroidsGame.SCREEN_WIDTH/2);
         this.center.y = (AsteroidsGame.SCREEN_HEIGHT/2);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT)
+            left();
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+            right();
+        if (e.getKeyCode() == KeyEvent.VK_UP){
+            thrust(false);
+            advance();
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN){
+            thrust(true);
+            advance();
+        }
+
+
     }
 
     public void left() {

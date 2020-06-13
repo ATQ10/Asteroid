@@ -1,5 +1,7 @@
 package com.asteroids;
 
+import com.gui.WindowGame;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +11,10 @@ import java.util.List;
 // *
 // * Tejeda Arnoldo (ATQ10)
 public class AsteroidsGame {
-    public static final int SCREEN_WIDTH = 0;
-    public static final int SCREEN_HEIGHT = 0;
+    public static final int SCREEN_WIDTH = 800;
+    public static final int SCREEN_HEIGHT = 600;
     public static List<Asteroid> asteroids;
+    public static final String soundWindowsGame = "src/com/sounds/game.wav";
 
     public static void main(String[] args) {
         System.out.println("***** Proyecto Asteroide *****");
@@ -23,5 +26,6 @@ public class AsteroidsGame {
 
         //CODE
         asteroids = new ArrayList<Asteroid>();
+        WindowGame wg = new WindowGame();
     }
 }

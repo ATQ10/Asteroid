@@ -1,13 +1,14 @@
 package com.asteroids;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.IOException;
 
-import static com.sun.webkit.graphics.GraphicsDecoder.drawImage;
+//import static com.sun.webkit.graphics.GraphicsDecoder.drawImage;
 
 abstract class Flying_Obj {
     public Velocity velocity;
@@ -43,8 +44,9 @@ abstract class Flying_Obj {
         this.center.y += this.velocity.dy;
     }
 
-    public void draw(Graphics2D g2) {
-        g2.drawImage(this.image, this.center.x, this.center.y, (ImageObserver) this);
+    public void draw(Graphics2D g2, JPanel p) {
+        g2.rotate(this.angle* Math.PI / 180.0,p.getWidth()/2,p.getHeight()/2);
+        g2.drawImage(this.image, this.center.x, this.center.y, p);
     }
 
     public Boolean isAlive() {
