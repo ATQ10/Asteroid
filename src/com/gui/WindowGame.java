@@ -63,34 +63,17 @@ public class WindowGame extends JPanel {
 
     private void runGame() {
         while (true) {
-            this.moveBall();
             this.repaint();
+            if(ship.inercia)
+                ship.advance();
             try {
-                Thread.sleep(1);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    int x = 0;
-    int y = 0;
-    int xa = 1;
-    int ya = 1;
-
-    private void moveBall() {
-        if (x + xa < 0)
-            xa = 1;
-        if (x + xa > getWidth() - 30)
-            xa = -1;
-        if (y + ya < 0)
-            ya = 1;
-        if (y + ya > getHeight() - 30)
-            ya = -1;
-
-        x = x + xa;
-        y = y + ya;
-    }
 
     @Override
     public void paint(Graphics g) {
@@ -100,6 +83,7 @@ public class WindowGame extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         //g.drawImage(ship.image,ship.center.x,ship.center.y,ship.image.getWidth(this),ship.image.getHeight(this),this);
         ship.draw((Graphics2D) g,this);
+        ship.advance();
         System.out.println("x: "+ship.center.x+" | y: "+ship.center.y+" | vx: "+ship.velocity.dx+" | vy: "+ship.velocity.dy+" | a : "+ship.angle);
     }
 

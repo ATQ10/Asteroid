@@ -12,7 +12,7 @@ import java.io.IOException;
 
 abstract class Flying_Obj {
     public Velocity velocity;
-    public Point center;
+    public PointDouble center;
     public Boolean alive;
     public Image image;
     public int radius;
@@ -25,7 +25,7 @@ abstract class Flying_Obj {
 
     public Flying_Obj(String img, int radius) {
         this.velocity = new Velocity();
-        this.center = new Point();
+        this.center = new PointDouble();
         this.alive = true;
         this.radius = radius;
         this.angle = 0;
@@ -46,7 +46,7 @@ abstract class Flying_Obj {
 
     public void draw(Graphics2D g2, JPanel p) {
         g2.rotate(this.angle* Math.PI / 180.0,this.center.x+this.image.getWidth(p)/2,this.center.y+this.image.getHeight(p)/2);
-        g2.drawImage(this.image, this.center.x, this.center.y, p);
+        g2.drawImage(this.image, (int) this.center.x, (int)this.center.y, p);
     }
 
     public Boolean isAlive() {
