@@ -1,5 +1,6 @@
 package com.asteroids;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -28,16 +29,18 @@ public class Ship extends Flying_Obj{
             thrust(true);
             advance();
         }
+    }
+    public void keyReleased(KeyEvent e) {
 
-
+        //JOptionPane.showMessageDialog(null,"Usted ha dejado de presionar una tecla");
     }
 
     public void left() {
-        this.angle += TURN_AMOUNT;
+        this.angle -= TURN_AMOUNT;
     }
 
     public void right() {
-        this.angle -= TURN_AMOUNT;
+        this.angle += TURN_AMOUNT;
     }
 
     public void thrust(Boolean isUp) {

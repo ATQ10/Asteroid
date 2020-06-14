@@ -45,7 +45,7 @@ abstract class Flying_Obj {
     }
 
     public void draw(Graphics2D g2, JPanel p) {
-        g2.rotate(this.angle* Math.PI / 180.0,p.getWidth()/2,p.getHeight()/2);
+        g2.rotate(this.angle* Math.PI / 180.0,this.center.x+this.image.getWidth(p)/2,this.center.y+this.image.getHeight(p)/2);
         g2.drawImage(this.image, this.center.x, this.center.y, p);
     }
 

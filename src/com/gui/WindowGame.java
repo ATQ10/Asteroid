@@ -56,9 +56,7 @@ public class WindowGame extends JPanel {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {
-
-            }
+            public void keyReleased(KeyEvent e) { ship.keyReleased(e); }
         });
         setFocusable(true);
     }
