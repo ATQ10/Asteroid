@@ -24,6 +24,7 @@ public class AsteroidsGame {
         System.out.println("Listo");
         System.out.println("Prueba Mena");
         System.out.println("Ahora todos tenemos acceso al repositorio :D");
+        System.out.println("Ahora todos tenemos acceso al repositorio :D");
 
         //CODE
         asteroids = new ArrayList<Asteroid>();

@@ -60,7 +60,6 @@ public class WindowGame extends JPanel {
             public void keyPressed(KeyEvent e) {
                 ship.keyPressed(e);
                 if (e.getKeyCode() == KeyEvent.VK_SPACE && ship.shot){
-
                     bullets.add(new Bullet(ship));
                     ship.shot = false;
                 }
