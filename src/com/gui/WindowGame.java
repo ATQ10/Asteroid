@@ -37,8 +37,8 @@ public class WindowGame extends JPanel {
 
         //Reproducimos fondo sonoro
         playSound();
-        this.frame.setVisible(true);
         loadGame();//carga los objetos del juego
+        this.frame.setVisible(true);
         runGame();
     }
 
