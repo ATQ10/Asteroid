@@ -15,6 +15,7 @@ public class AsteroidsGame {
     public static final int SCREEN_HEIGHT = 600;
     public static List<Asteroid> asteroids;
     public static final String soundWindowsGame = "src/com/sounds/game.wav";
+    public static final String soundBullet = "src/com/sounds/laser.wav";
 
     public static void main(String[] args) {
         System.out.println("***** Proyecto Asteroide *****");

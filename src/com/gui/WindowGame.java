@@ -1,5 +1,7 @@
 package com.gui;
 import com.asteroids.AsteroidsGame;
+import com.asteroids.Bullet;
+import com.asteroids.PointDouble;
 import com.asteroids.Ship;
 
 import javax.imageio.ImageIO;
@@ -8,14 +10,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class WindowGame extends JPanel {
     JFrame frame;
     Image imageBackground;
     Ship ship;
-
+    Clip sound;
+    ArrayList<Bullet> bullets;
     public WindowGame(){
         this.frame = new JFrame();
         //Titulamos la ventana
@@ -24,7 +29,6 @@ public class WindowGame extends JPanel {
         this.frame.setSize(AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLocationRelativeTo(null);
-
         //Ponemos el fondo visual
         try {
             imageBackground = ImageIO.read(new File("src/com/img/galaxy.jpg"));
@@ -43,9 +47,11 @@ public class WindowGame extends JPanel {
     }
 
     private void loadGame() {
-        ship = new Ship();
+        this.ship = new Ship();
+        this.bullets = new ArrayList<>();
         // se registra KeyListener para ship
         addKeyListener(new KeyListener() {
+
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -53,27 +59,36 @@ public class WindowGame extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 ship.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_SPACE && ship.shot){
+
+                    bullets.add(new Bullet(ship));
+                    ship.shot = false;
+                }
             }
 
             @Override
-            public void keyReleased(KeyEvent e) { ship.keyReleased(e); }
+            public void keyReleased(KeyEvent e) {
+                ship.keyReleased(e);
+                if (e.getKeyCode() == KeyEvent.VK_SPACE){
+                    ship.shot = true;
+                }
+            }
         });
         setFocusable(true);
     }
 
     private void runGame() {
-        while (true) {
+        while (ship.alive) {
             this.repaint();
-            if(ship.inercia)
-                ship.advance();
             try {
-                Thread.sleep(5);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(!ship.alive)
+                this.sound.stop();
         }
     }
-
 
     @Override
     public void paint(Graphics g) {
@@ -82,19 +97,28 @@ public class WindowGame extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
         //g.drawImage(ship.image,ship.center.x,ship.center.y,ship.image.getWidth(this),ship.image.getHeight(this),this);
-        ship.draw((Graphics2D) g,this);
-        ship.advance();
-        System.out.println("x: "+ship.center.x+" | y: "+ship.center.y+" | vx: "+ship.velocity.dx+" | vy: "+ship.velocity.dy+" | a : "+ship.angle);
+        this.ship.advance();
+        this.ship.draw(g2d,this);
+        if(this.bullets.size()>0)
+            for(Bullet bullet : this.bullets)
+                if(bullet.alive){
+                    bullet.advance();
+                    bullet.draw(g2d,this);
+                    System.out.println("x: "+bullet.center.x+" | y: "+bullet.center.y+" | vx: "+bullet.velocity.dx+" " +
+                            "| vy: "+bullet.velocity.dy+" | a : "+bullet.angle +" | "+ship.angle);
+                }
+        //System.out.println("x: "+ship.center.x+" | y: "+ship.center.y+" | vx: "+ship.velocity.dx+" | vy: "+ship.velocity.dy+" | a : "+ship.angle);
     }
 
     public void paintComponent(Graphics g){
         g.drawImage(imageBackground,0,0,getWidth(),getHeight(),this);
     }
-    private void playSound() {
+
+    public void playSound(){
         try {
-            Clip sonido = AudioSystem.getClip();
-            sonido.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundWindowsGame)));
-            sonido.loop(Clip.LOOP_CONTINUOUSLY);
+            sound = AudioSystem.getClip();
+            sound.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundWindowsGame)));
+            sound.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {

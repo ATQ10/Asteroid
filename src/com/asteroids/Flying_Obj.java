@@ -10,7 +10,7 @@ import java.io.IOException;
 
 //import static com.sun.webkit.graphics.GraphicsDecoder.drawImage;
 
-abstract class Flying_Obj {
+abstract class Flying_Obj extends Thread{
     public Velocity velocity;
     public PointDouble center;
     public Boolean alive;
@@ -44,14 +44,15 @@ abstract class Flying_Obj {
         this.center.y += this.velocity.dy;
     }
 
-    public void draw(Graphics2D g2, JPanel p) {
-        g2.rotate(this.angle* Math.PI / 180.0,this.center.x+this.image.getWidth(p)/2,this.center.y+this.image.getHeight(p)/2);
-        g2.drawImage(this.image, (int) this.center.x, (int)this.center.y, p);
+    public void draw(Graphics2D g2,JPanel panel) {
+        g2.drawImage(this.image, (int) this.center.x, (int)this.center.y, panel);
     }
 
+/*
     public Boolean isAlive() {
         return this.alive;
     }
+*/
 
     public void wrapping() {
         if(this.center.x > AsteroidsGame.SCREEN_WIDTH) {
