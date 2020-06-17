@@ -15,4 +15,13 @@ public class Asteroid extends Flying_Obj{
     }
 
     public void break_apart() throws IOException {};
+    @Override
+    public void draw(Graphics g) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 }

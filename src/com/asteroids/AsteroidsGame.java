@@ -29,5 +29,6 @@ public class AsteroidsGame {
         //CODE
         asteroids = new ArrayList<Asteroid>();
         WindowGame wg = new WindowGame();
+        wg.start();
     }
 }

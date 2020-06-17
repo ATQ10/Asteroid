@@ -10,24 +10,11 @@ public class Ship extends Flying_Obj{
     public final float THRUST_AMOUNT = 0.25f;
     public boolean shot;
     public Ship() {
-        super("src/com/img/ovni.png", 30);
+        super("/com/img/ovni.png", 30);
         this.angle = 1;
         this.center.x = (AsteroidsGame.SCREEN_WIDTH/2);
         this.center.y = (AsteroidsGame.SCREEN_HEIGHT/2);
         this.shot = true;
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT)
-            left();
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-            right();
-        if (e.getKeyCode() == KeyEvent.VK_UP)
-            thrust(false);
-        if (e.getKeyCode() == KeyEvent.VK_DOWN)
-            thrust(true);
-    }
-    public void keyReleased(KeyEvent e) {
     }
 
     public void left() { this.angle -= TURN_AMOUNT; }
@@ -47,8 +34,28 @@ public class Ship extends Flying_Obj{
             this.velocity.dy -= Math.cos(Math.toRadians(this.angle)) * THRUST_AMOUNT;
         }
     }
+
+    @Override
+    public void update() {
+        if (KeyBoard.LEFT)
+            left();
+        if (KeyBoard.RIGHT)
+            right();
+        if (KeyBoard.UP)
+            thrust(false);
+        if (KeyBoard.DOWN)
+            thrust(true);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        this.advance();
+        g.drawImage(this.texture,(int)this.center.x,(int)this.center.y,null);
+    }
+
+    /*
     public void draw(Graphics2D g2,JPanel panel) {
         g2.rotate(this.angle* Math.PI / 180.0,this.center.x+this.image.getWidth(panel)/2,this.center.y+this.image.getHeight(panel)/2);
-        super.draw(g2,panel);
     }
+     */
 }

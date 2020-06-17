@@ -3,6 +3,7 @@ package com.asteroids;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.io.File;
@@ -10,7 +11,8 @@ import java.io.IOException;
 
 //import static com.sun.webkit.graphics.GraphicsDecoder.drawImage;
 
-abstract class Flying_Obj extends Thread{
+abstract class Flying_Obj{
+    protected BufferedImage texture;
     public Velocity velocity;
     public PointDouble center;
     public Boolean alive;
@@ -31,11 +33,7 @@ abstract class Flying_Obj extends Thread{
         this.angle = 0;
         this.speed = 0;
         this.direction = 0;
-        try {
-            this.image = ImageIO.read(new File(img));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.texture = Loader.ImageLoader(img);
     }
 
     public void advance() {
@@ -44,11 +42,15 @@ abstract class Flying_Obj extends Thread{
         this.center.y += this.velocity.dy;
     }
 
+    public abstract void update();
+
+    public abstract void draw(Graphics g);
+/*
     public void draw(Graphics2D g2,JPanel panel) {
         g2.drawImage(this.image, (int) this.center.x, (int)this.center.y, panel);
     }
 
-/*
+
     public Boolean isAlive() {
         return this.alive;
     }

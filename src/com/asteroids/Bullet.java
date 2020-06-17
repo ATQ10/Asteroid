@@ -48,7 +48,7 @@ public class Bullet extends Flying_Obj{
             this.alive = false;
         }
     }
-
+/*
     public void run(){
         //this.fire();
         //System.out.println(this.getName());
@@ -58,4 +58,16 @@ public class Bullet extends Flying_Obj{
             g2.rotate(this.angle* Math.PI/180.0 ,this.center.x+this.image.getWidth(panel)/2,this.center.y+this.image.getHeight(panel)/2);
             super.draw(g2,panel);
         }
+
+ */
+
+    @Override
+    public void draw(Graphics g) {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 }
