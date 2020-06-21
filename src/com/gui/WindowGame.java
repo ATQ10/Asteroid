@@ -166,7 +166,7 @@ public class WindowGame extends JFrame implements Runnable{
 
 
         this.g.setColor(Color.WHITE);
-        this.g.drawString("FPS: "+this.PROMFPS,0,10);
+        this.g.drawString("FPS: "+this.PROMFPS,AsteroidsGame.SCREEN_WIDTH-80,10);
 
         //------------ Finaliza el dibujo
 
@@ -176,7 +176,7 @@ public class WindowGame extends JFrame implements Runnable{
 
     public void init(){
     this.loadGame();
-
+    this.playSound();
     }
 
     @Override

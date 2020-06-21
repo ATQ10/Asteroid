@@ -3,6 +3,7 @@ package com.asteroids;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
@@ -13,12 +14,15 @@ import java.io.IOException;
 
 abstract class Flying_Obj{
     protected BufferedImage texture;
+    protected AffineTransform at;
     public Velocity velocity;
+    public double maxVelocity;
     public PointDouble center;
     public Boolean alive;
-    public Image image;
+    public int width;
+    public int height;
     public int radius;
-    public float angle;
+    public double angle;
     public float speed;
     public int direction;
 
@@ -34,6 +38,8 @@ abstract class Flying_Obj{
         this.speed = 0;
         this.direction = 0;
         this.texture = Loader.ImageLoader(img);
+        this.width = this.texture.getWidth();
+        this.height = this.texture.getHeight();
     }
 
     public void advance() {

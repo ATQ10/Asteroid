@@ -6,6 +6,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +16,7 @@ public class Bullet extends Flying_Obj{
     // public String laserSound;
 
     public Bullet(Ship ship1) {
-        super("src/com/img/laserBlue1.png", 30); //sustituir img por imagen
+        super("/com/img/laserBlue1.png", 30); //sustituir img por imagen
         this.life = 60;
         this.speed = 10;
         this.angle = ship1.angle;
@@ -37,8 +38,8 @@ public class Bullet extends Flying_Obj{
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
-        this.velocity.dx += Math.sin(Math.toRadians(this.angle)) * this.speed;
-        this.velocity.dy -= Math.cos(Math.toRadians(this.angle)) * this.speed;
+        this.velocity.dx += Math.sin(this.angle) * this.speed;
+        this.velocity.dy -= Math.cos(this.angle) * this.speed;
     }
 
     public void advance() {
@@ -63,11 +64,17 @@ public class Bullet extends Flying_Obj{
 
     @Override
     public void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
 
+        this.at = AffineTransform.getTranslateInstance(this.center.x,this.center.y);
+
+        this.at.rotate(this.angle,this.width/2,this.height/2);
+
+        g2d.drawImage(texture,this.at,null);
     }
 
     @Override
     public void update() {
-
+        this.advance();
     }
 }

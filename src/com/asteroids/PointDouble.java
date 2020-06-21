@@ -29,4 +29,11 @@ public class PointDouble {
         this.y = y;
     }
 
+    public double getMagnotude(){
+        return Math.sqrt(this.x*this.x + this.y*this.y);
+    }
+
+    public PointDouble setDirection(double angle){
+        return new PointDouble(Math.cos(angle)*this.getMagnotude(),Math.sin(angle)*this.getMagnotude());
+    }
 }
