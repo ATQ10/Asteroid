@@ -20,7 +20,7 @@ public class Bullet extends Flying_Obj{
         this.life = 60;
         this.speed = 10;
         this.angle = ship1.angle;
-        this.center.x = ship1.center.x;
+        this.center.x = ship1.center.x + ship1.width/2 - this.width/2;
         this.center.y = ship1.center.y;
         //this.start();
         fire();
@@ -76,5 +76,9 @@ public class Bullet extends Flying_Obj{
     @Override
     public void update() {
         this.advance();
+    }
+
+    public boolean collision(Asteroid asteroid) {
+        return asteroid.getBounds().intersects(this.getBounds());
     }
 }

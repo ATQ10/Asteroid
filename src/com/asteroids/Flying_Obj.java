@@ -76,5 +76,8 @@ abstract class Flying_Obj{
             this.center.y += AsteroidsGame.SCREEN_HEIGHT;
         }
     }
+    public Rectangle getBounds() {
+        return new Rectangle((int)this.center.x, (int)this.center.y, this.width, this.height);
+    }
 
 }

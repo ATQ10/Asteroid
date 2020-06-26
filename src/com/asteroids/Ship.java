@@ -41,8 +41,12 @@ public class Ship extends Flying_Obj{
 
     @Override
     public void update() {
-        if (KeyBoard.SPACE)
+        if (KeyBoard.SPACE && this.shot) {
             game.bullets.add(new Bullet(this));
+            this.shot = false;
+        }
+        if (!KeyBoard.SPACE)
+            this.shot = true;
         if (KeyBoard.LEFT)
             left();
         if (KeyBoard.RIGHT)

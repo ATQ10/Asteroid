@@ -1,16 +1,22 @@
 package com.asteroids;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 public class Medium_Asteroid extends Asteroid{
-    public final int ROCK_SPIN = -2;
+    public final double ROCK_SPIN = Math.toRadians(-2);
 
-    public Medium_Asteroid() throws IOException {
-        super("", 5);
-        this.speed = 2;
+    public Medium_Asteroid(Game game){
+        super("/com/img/meteorGrey_med1.png", 5);
+        this.speed = 1;
         this.velocity.dx += Math.cos(Math.toRadians(this.direction)) * this.speed;
         this.velocity.dx += Math.cos(Math.toRadians(this.direction)) * this.speed;
+        this.game = game;
     }
     @Override
     public void advance() {
@@ -19,22 +25,34 @@ public class Medium_Asteroid extends Asteroid{
     }
 
     @Override
-    public void break_apart() throws IOException {
-        Small_Asteroid small1 = new Small_Asteroid();
+    public void break_apart() {
+        Small_Asteroid small1 = new Small_Asteroid(game);
         small1.center.x = this.center.x;
         small1.center.y = this.center.y;
         small1.velocity.dx = this.velocity.dy - 1.5f;
         small1.velocity.dy = this.velocity.dy + 1.5f;
 
-        Small_Asteroid small2 = new Small_Asteroid();
+        Small_Asteroid small2 = new Small_Asteroid(game);
         small2.center.x = this.center.x;
         small2.center.y = this.center.y;
         small2.velocity.dx = this.velocity.dy - 1.5f;
         small2.velocity.dy = this.velocity.dy - 1.5f;
 
-        AsteroidsGame.asteroids.add(small1);
-        AsteroidsGame.asteroids.add(small2);
+        this.game.asteroids.add(small1);
+        this.game.asteroids.add(small2);
 
         this.alive = false;
+
+        try {
+            Clip sound = AudioSystem.getClip();
+            sound.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundCollision)));
+            sound.start();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
 }

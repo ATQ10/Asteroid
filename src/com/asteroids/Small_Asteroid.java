@@ -3,11 +3,12 @@ package com.asteroids;
 import java.io.IOException;
 
 public class Small_Asteroid extends Asteroid{
-    public final int ROCK_SPIN = 5;
+    public final double ROCK_SPIN = Math.toRadians(5);
 
-    public Small_Asteroid() throws IOException {
-        super("", 2);
-        this.speed = 1.5f;
+    public Small_Asteroid(Game game){
+        super("/com/img/meteorGrey_small1.png", 2);
+        this.speed = .5f;
+        this.game = game;
     }
 
     @Override
@@ -17,7 +18,7 @@ public class Small_Asteroid extends Asteroid{
     }
 
     @Override
-    public void break_apart() throws IOException {
+    public void break_apart() {
         this.alive = false;
     }
 }
