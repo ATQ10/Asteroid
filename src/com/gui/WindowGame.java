@@ -204,6 +204,10 @@ public class WindowGame extends JFrame implements Runnable{
                 this.PROMFPS = frames;
                 frames = 0;
                 time=0;
+                if(Game.takeAbreak)
+                    Game.newRound--;
+                if(Game.newRound<0)
+                    Game.takeAbreak = false;
             }
         }
 
