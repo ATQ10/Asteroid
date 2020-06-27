@@ -21,6 +21,7 @@ public class Large_Asteroid extends Asteroid{
         this.velocity.dx += Math.cos(Math.toRadians(this.direction)) * this.speed;
         this.velocity.dy += Math.cos(Math.toRadians(this.direction)) * this.speed;
         this.game = game;
+        this.points = 5;
     }
 
     @Override

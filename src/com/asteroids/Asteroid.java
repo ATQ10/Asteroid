@@ -7,6 +7,7 @@ import java.io.IOException;
 public class Asteroid extends Flying_Obj{
     // public String sound;
     Game game;
+    public int points;
     public Asteroid(String img, int radius){
         super(img, radius);
         // this.sound = sound;

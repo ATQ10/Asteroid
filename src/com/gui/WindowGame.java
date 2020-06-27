@@ -170,6 +170,9 @@ public class WindowGame extends JFrame implements Runnable{
 
         //------------ Finaliza el dibujo
 
+        this.g.setColor(Color.WHITE);
+        this.g.drawString("SCORE: "+ this.game.score,AsteroidsGame.SCREEN_WIDTH-780,10);
+
         this.g.dispose();
         this.bs.show();
     }

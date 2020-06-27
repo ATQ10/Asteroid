@@ -8,9 +8,12 @@ public class Game {
     Ship ship;
     ArrayList<Bullet> bullets = new ArrayList<>();
     ArrayList<Asteroid> asteroids = new ArrayList<>();
+    int num_asteroids = 1;
+    public int score = 0;
+
     public Game(){
         this.ship = new Ship(this);
-        for (int i=0;i<5;i++)
+        for (int i=0;i<num_asteroids;i++)
             this.asteroids.add(new Large_Asteroid(this));
     }
 
@@ -36,6 +39,12 @@ public class Game {
         //System.out.println(this.bullets.size());
         //Coliciones
         this.collisions();
+
+        if(this.ship.alive && (this.asteroids.size() == 0)) {
+            num_asteroids += 2;
+            for(int i=0; i<num_asteroids; i++)
+                this.asteroids.add(new Large_Asteroid(this));
+        }
     }
 
     private void collisions() {
@@ -43,17 +52,30 @@ public class Game {
             for (int i=0;i<this.bullets.size();i++)
                 for (int j=0;j<this.asteroids.size();j++)
                     if(bullets.get(i).collision(this.asteroids.get(j))){
+                        this.score += this.asteroids.get(j).points;
                         this.asteroids.get(j).break_apart();
                         this.bullets.remove(i);
                         return;
                     }
         }
+
+        for(Asteroid asteroid: this.asteroids) {
+            if(this.ship.alive &&  asteroid.alive) {
+                if(this.ship.collision(asteroid)) {
+                    asteroid.break_apart();
+                    this.ship.alive = false;
+                    return;
+                }
+            }
+        }
     }
 
     public void draw(Graphics g){
-        for (Bullet bullet : this.bullets)
-            bullet.draw(g);
-        this.ship.draw(g);
+        if(this.ship.alive) {
+            for (Bullet bullet : this.bullets)
+                bullet.draw(g);
+            this.ship.draw(g);
+        }
         for (Asteroid asteroid : asteroids)
             asteroid.draw(g);
     }

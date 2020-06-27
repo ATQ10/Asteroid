@@ -17,7 +17,7 @@ public class Ship extends Flying_Obj{
         this.center.x = (AsteroidsGame.SCREEN_WIDTH/2);
         this.center.y = (AsteroidsGame.SCREEN_HEIGHT/2);
         this.shot = true;
-        this.maxVelocity = 10;
+        this.maxVelocity = 2;
         this.game = game;
     }
 
@@ -41,22 +41,24 @@ public class Ship extends Flying_Obj{
 
     @Override
     public void update() {
-        if (KeyBoard.SPACE && this.shot) {
-            game.bullets.add(new Bullet(this));
-            this.shot = false;
-        }
-        if (!KeyBoard.SPACE)
-            this.shot = true;
-        if (KeyBoard.LEFT)
-            left();
-        if (KeyBoard.RIGHT)
-            right();
-        if (KeyBoard.UP)
-            thrust(false);
-        if (KeyBoard.DOWN)
-            thrust(true);
+        if(this.alive) {
+            if (KeyBoard.SPACE && this.shot) {
+                game.bullets.add(new Bullet(this));
+                this.shot = false;
+            }
+            if (!KeyBoard.SPACE)
+                this.shot = true;
+            if (KeyBoard.LEFT)
+                left();
+            if (KeyBoard.RIGHT)
+                right();
+            if (KeyBoard.UP)
+                thrust(false);
+            if (KeyBoard.DOWN)
+                thrust(true);
 
-        this.velocity.limit(this.maxVelocity);
+            this.velocity.limit(this.maxVelocity);
+        }
     }
 
 
@@ -91,4 +93,8 @@ public class Ship extends Flying_Obj{
         g2.rotate(this.angle* Math.PI / 180.0,this.center.x+this.image.getWidth(panel)/2,this.center.y+this.image.getHeight(panel)/2);
     }
      */
+
+    public boolean collision(Asteroid asteroid) {
+        return asteroid.getBounds().intersects(this.getBounds());
+    }
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class Medium_Asteroid extends Asteroid{
     public final double ROCK_SPIN = Math.toRadians(-2);
+    public static final int POINTS = 3;
 
     public Medium_Asteroid(Game game){
         super("/com/img/meteorGrey_med1.png", 5);
@@ -17,6 +18,7 @@ public class Medium_Asteroid extends Asteroid{
         this.velocity.dx += Math.cos(Math.toRadians(this.direction)) * this.speed;
         this.velocity.dx += Math.cos(Math.toRadians(this.direction)) * this.speed;
         this.game = game;
+        this.points = 3;
     }
     @Override
     public void advance() {

@@ -4,11 +4,13 @@ import java.io.IOException;
 
 public class Small_Asteroid extends Asteroid{
     public final double ROCK_SPIN = Math.toRadians(5);
+    public static  final int POINTS = 1;
 
     public Small_Asteroid(Game game){
         super("/com/img/meteorGrey_small1.png", 2);
         this.speed = .5f;
         this.game = game;
+        this.points = 1;
     }
 
     @Override
