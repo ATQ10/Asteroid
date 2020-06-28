@@ -1,5 +1,7 @@
 package com.asteroids;
 
+import com.gui.WindowGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -12,7 +14,7 @@ public class Ship extends Flying_Obj{
     public boolean shot;
     public Game game;
     public Ship(Game game) {
-        super("/com/img/ovni.png", 30);
+        super(WindowGame.skin, 30);
         this.angle = Math.toRadians(1);
         this.center.x = (AsteroidsGame.SCREEN_WIDTH/2);
         this.center.y = (AsteroidsGame.SCREEN_HEIGHT/2);

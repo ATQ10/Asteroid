@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class WindowGame extends JFrame implements Runnable{
+    public static String skin;
     Canvas canvas;
     Image imageBackground;
     Thread thread;
@@ -26,11 +27,12 @@ public class WindowGame extends JFrame implements Runnable{
     int PROMFPS = FPS;
     Game game;
     KeyBoard keyBoard;
-    Ship ship;
     Clip sound;
     ArrayList<Bullet> bullets;
 
-    public WindowGame(){
+    public WindowGame(String ship){
+        //Definimos ruta de skin
+        this.skin = ship;
         //Titulamos la ventana
         this.setTitle("Asteriods");
         //Redimencionamos la ventana
@@ -43,10 +45,6 @@ public class WindowGame extends JFrame implements Runnable{
         this.canvas.setMaximumSize(new Dimension(AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT));
         this.canvas.setMinimumSize(new Dimension(AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT));
         this.add(canvas);
-        //Reproducimos fondo sonoro
-        //playSound();
-        //loadGame();//carga los objetos del juego
-        //runGame();
         this.setVisible(true);
         this.setFocusable(true);
     }
@@ -61,76 +59,8 @@ public class WindowGame extends JFrame implements Runnable{
         this.game = new Game();
         keyBoard = new KeyBoard();
         this.addKeyListener(this.keyBoard);
-
-        /*
-        this.ship = new Ship();
-        this.bullets = new ArrayList<>();
-        // se registra KeyListener para ship
-        addKeyListener(new KeyListener() {
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                ship.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_SPACE && ship.shot){
-                    bullets.add(new Bullet(ship));
-                    ship.shot = false;
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                ship.keyReleased(e);
-                if (e.getKeyCode() == KeyEvent.VK_SPACE){
-                    ship.shot = true;
-                }
-            }
-        });
-        setFocusable(true);
-        */
     }
 
-    private void runGame() {
-        while (ship.alive) {
-            this.repaint();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if(!ship.alive)
-                this.sound.stop();
-        }
-    }
-/*
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        //g.drawImage(ship.image,ship.center.x,ship.center.y,ship.image.getWidth(this),ship.image.getHeight(this),this);
-        this.ship.advance();
-        this.ship.draw(g2d,new JPanel());
-        if(this.bullets.size()>0)
-            for(Bullet bullet : this.bullets)
-                if(bullet.alive){
-                    bullet.advance();
-                    bullet.draw(g2d,new JPanel());
-                    System.out.println("x: "+bullet.center.x+" | y: "+bullet.center.y+" | vx: "+bullet.velocity.dx+" " +
-                            "| vy: "+bullet.velocity.dy+" | a : "+bullet.angle +" | "+ship.angle);
-                }
-        //System.out.println("x: "+ship.center.x+" | y: "+ship.center.y+" | vx: "+ship.velocity.dx+" | vy: "+ship.velocity.dy+" | a : "+ship.angle);
-
-    }
-
-    public void paintComponent(Graphics g){
-        g.drawImage(imageBackground,0,0,getWidth(),getHeight(),this);
-    }
-*/
     public void playSound(){
         try {
             sound = AudioSystem.getClip();

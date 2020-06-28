@@ -1,9 +1,7 @@
 package com.asteroids;
 
+import com.gui.Main;
 import com.gui.WindowGame;
-
-import java.util.ArrayList;
-import java.util.List;
 
 //Favor de agregar su nombre para indicar que se tiene control del
 // las versiones del repositorio:D
@@ -27,7 +25,6 @@ public class AsteroidsGame {
         System.out.println("Versión BETA");
 
         //CODE
-        WindowGame wg = new WindowGame();
-        wg.start();
+        new Main().setVisible(true);
     }
 }
