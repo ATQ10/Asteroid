@@ -1,7 +1,12 @@
 package com.asteroids;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class Loader {
@@ -17,6 +22,32 @@ public class Loader {
             e.printStackTrace();
         }
         return null;
+    }
+    public static void playSoundSelect(){
+        try {
+            Clip sound = AudioSystem.getClip();
+            sound.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundSelect)));
+            sound.start();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void playSoundExplosion(){
+        try {
+            Clip sound = AudioSystem.getClip();
+            sound.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundExplosion)));
+            sound.start();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
     }
 
 }

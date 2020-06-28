@@ -1,19 +1,25 @@
 package com.gui;
 
+import com.asteroids.Loader;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SelectShip extends JFrame {
+public class SelectShip extends JFrame implements Runnable{
     public Container background;
     public JButton ship1Button;
     public JButton ship2Button;
     public JButton ship3Button;
+    public JButton retButton;
+    public static boolean close;
     int ejeY = 200;
+    Thread thread;
 
     public SelectShip(){
+        this.close = false;
         this.setSize(new Dimension(800, 600));
         this.setTitle("Asteroids - Selección de nave");
         background = new Container();
@@ -22,6 +28,8 @@ public class SelectShip extends JFrame {
         this.setContentPane(this.background);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.thread = new Thread(this);
+        this.thread.start();
     }
 
     private void insertButtons() {
@@ -44,6 +52,8 @@ public class SelectShip extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 WindowGame wg = new WindowGame("/com/img/ovni.png");
                 wg.start();
+                Loader.playSoundSelect();
+                SelectShip.close = true;
             }
         });
 
@@ -65,6 +75,8 @@ public class SelectShip extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 WindowGame wg = new WindowGame("/com/img/playerShip1_orange.png");
                 wg.start();
+                Loader.playSoundSelect();
+                SelectShip.close = true;
             }
         });
 
@@ -86,8 +98,47 @@ public class SelectShip extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 WindowGame wg = new WindowGame("/com/img/playerShip2_red.png");
                 wg.start();
+                Loader.playSoundSelect();
+                SelectShip.close = true;
             }
         });
+
+        //Agregamos boton regresar
+        retButton = new JButton();
+        retButton.setOpaque(false);
+        try {
+            Image img = ImageIO.read(getClass().getResource("/com/img/return.png"));
+            retButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        retButton.setBounds(500,450,238,55);
+        retButton.setEnabled(true);
+        retButton.setMnemonic('r'); // Alt + r
+        this.background.add(retButton);
+
+        retButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Loader.playSoundSelect();
+                SelectShip.close = true;
+            }
+        });
+
+    }
+
+    @Override
+    public void run() {
+        SelectShip.close = false;
+        while (!SelectShip.close){
+            //Esperando para cerrar
+            try {
+                Thread.currentThread().sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        SelectShip.close = false;
+        this.dispose();
     }
 
 

@@ -2,9 +2,7 @@ package com.asteroids;
 
 import com.gui.WindowGame;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 
 public class Ship extends Flying_Obj{
@@ -90,11 +88,6 @@ public class Ship extends Flying_Obj{
         g2d.drawImage(texture,this.at,null);
     }
 
-    /*
-    public void draw(Graphics2D g2,JPanel panel) {
-        g2.rotate(this.angle* Math.PI / 180.0,this.center.x+this.image.getWidth(panel)/2,this.center.y+this.image.getHeight(panel)/2);
-    }
-     */
 
     public boolean collision(Asteroid asteroid) {
         return asteroid.getBounds().intersects(this.getBounds());

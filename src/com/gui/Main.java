@@ -1,12 +1,22 @@
 package com.gui;
 
+import com.asteroids.AsteroidsGame;
+import com.asteroids.Loader;
+
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class Main extends JFrame {
+    public static Clip sound;
     public menuPrincipal menu;
     public JButton playButton;
     public JButton creditsButton;
@@ -20,6 +30,8 @@ public class Main extends JFrame {
         this.setContentPane(this.menu);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        playSound();
     }
 
     private void insertButtons() {
@@ -41,6 +53,7 @@ public class Main extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
                 new SelectShip().setVisible(true);
+                Loader.playSoundSelect();
             }
         });
 
@@ -62,6 +75,7 @@ public class Main extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
                 new Credits().setVisible(true);
+                Loader.playSoundSelect();
             }
         });
     }
@@ -79,6 +93,20 @@ public class Main extends JFrame {
             setOpaque(false);
 
             super.paint(g);
+        }
+    }
+
+    public void playSound(){
+        try {
+            sound = AudioSystem.getClip();
+            sound.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundMain)));
+            sound.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -1,22 +1,24 @@
 package com.gui;
 import com.asteroids.*;
+import com.asteroids.Timer;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class WindowGame extends JFrame implements Runnable{
     public static String skin;
+    public static Clip sound;
+    public static boolean play = true;
     Canvas canvas;
     Image imageBackground;
+    Image imageLoser;
+    Image imageWinner;
     Thread thread;
     Boolean active = false;
     BufferStrategy bs;
@@ -27,19 +29,21 @@ public class WindowGame extends JFrame implements Runnable{
     int PROMFPS = FPS;
     Game game;
     KeyBoard keyBoard;
-    Clip sound;
     ArrayList<Bullet> bullets;
+    //Timer
+    Timer timer;
 
     public WindowGame(String ship){
         //Definimos ruta de skin
         this.skin = ship;
+        this.timer = new Timer();
         //Titulamos la ventana
         this.setTitle("Asteriods");
         //Redimencionamos la ventana
         this.setSize(AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-
+        this.setResizable(false);
         this.canvas = new Canvas();
         this.canvas.setPreferredSize(new Dimension(AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT));
         this.canvas.setMaximumSize(new Dimension(AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT));
@@ -53,6 +57,8 @@ public class WindowGame extends JFrame implements Runnable{
         //Elegimos nuestro fondo
         try {
             this.imageBackground = ImageIO.read(new File("src/com/img/galaxy.jpg"));
+            this.imageLoser = ImageIO.read(new File("src/com/img/loser.png"));
+            this.imageWinner = ImageIO.read(new File("src/com/img/win.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,6 +69,7 @@ public class WindowGame extends JFrame implements Runnable{
 
     public void playSound(){
         try {
+            Main.sound.stop();
             sound = AudioSystem.getClip();
             sound.open(AudioSystem.getAudioInputStream(new File(AsteroidsGame.soundWindowsGame)));
             sound.loop(Clip.LOOP_CONTINUOUSLY);
@@ -89,27 +96,48 @@ public class WindowGame extends JFrame implements Runnable{
         this.g = bs.getDrawGraphics();
 
         //------------ Comienza el dibujo
+        if(this.active && !Game.loser && !Game.winner){
+            this.g.setFont(new Font ("Arial", 1, 20));
+            this.g.drawImage(imageBackground,0,0,AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT,null);
 
-        this.g.drawImage(imageBackground,0,0,AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT,null);
+            this.game.draw(this.g);
 
-        this.game.draw(this.g);
+            this.g.setColor(Color.WHITE);
+            this.g.drawString("FPS: "+this.PROMFPS,AsteroidsGame.SCREEN_WIDTH-90,15);
 
+            this.g.setColor(Color.WHITE);
+            this.g.drawString("SCORE: "+ this.game.score,AsteroidsGame.SCREEN_WIDTH-780,15);
+            this.timer.draw(g);
+        }else{
+            if (Game.winner){
+                this.g.drawImage(imageWinner,0,0,AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT,null);
+                this.g.setColor(Color.BLACK);
+                this.g.setFont(new Font ("Arial", 1, 50));
+                this.g.drawString(""+this.game.score,310,435);
+                this.timer.drawScore(g);
+                if(KeyBoard.ENTER)
+                    this.active = !Game.winner;
+            }
+            else
+                if(Game.loser){
+                    this.g.drawImage(imageLoser,0,0,AsteroidsGame.SCREEN_WIDTH,AsteroidsGame.SCREEN_HEIGHT,null);
+                    this.g.setColor(Color.BLACK);
+                    this.g.setFont(new Font ("Arial", 1, 50));
+                    this.g.drawString(""+this.game.score,310,435);
+                    this.timer.drawScore(g);
+                    if(KeyBoard.ENTER)
+                        this.active = !Game.loser;
+                }
 
-        this.g.setColor(Color.WHITE);
-        this.g.drawString("FPS: "+this.PROMFPS,AsteroidsGame.SCREEN_WIDTH-80,10);
-
+        }
         //------------ Finaliza el dibujo
-
-        this.g.setColor(Color.WHITE);
-        this.g.drawString("SCORE: "+ this.game.score,AsteroidsGame.SCREEN_WIDTH-780,10);
-
         this.g.dispose();
         this.bs.show();
     }
 
     public void init(){
-    this.loadGame();
-    this.playSound();
+        this.loadGame();
+        this.playSound();
     }
 
     @Override
@@ -140,7 +168,9 @@ public class WindowGame extends JFrame implements Runnable{
                     Game.takeAbreak = false;
             }
         }
-
+            Game.winner = false;
+            Game.loser = false;
+            this.dispose();
         this.stop();
     }
 
@@ -158,4 +188,6 @@ public class WindowGame extends JFrame implements Runnable{
             e.printStackTrace();
         }
     }
+
+
 }

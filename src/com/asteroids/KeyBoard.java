@@ -6,7 +6,7 @@ import java.net.PortUnreachableException;
 
 public class KeyBoard  implements KeyListener {
     public boolean[] keys = new boolean[256];
-    public static boolean UP, DOWN, LEFT, RIGHT, SPACE;
+    public static boolean UP, DOWN, LEFT, RIGHT, SPACE, ENTER;
 
     public KeyBoard(){
         UP = false;
@@ -22,6 +22,7 @@ public class KeyBoard  implements KeyListener {
         LEFT = keys[KeyEvent.VK_LEFT];
         RIGHT = keys[KeyEvent.VK_RIGHT];
         SPACE = keys[KeyEvent.VK_SPACE];
+        ENTER = keys[KeyEvent.VK_ENTER];
     }
     @Override
     public void keyTyped(KeyEvent e) {

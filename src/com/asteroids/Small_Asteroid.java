@@ -1,7 +1,5 @@
 package com.asteroids;
 
-import java.io.IOException;
-
 public class Small_Asteroid extends Asteroid{
     public final double ROCK_SPIN = Math.toRadians(5);
     public static  final int POINTS = 1;

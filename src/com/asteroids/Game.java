@@ -1,13 +1,19 @@
 package com.asteroids;
 
+import com.gui.Main;
+import com.gui.WindowGame;
+
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class Game {
     public static boolean takeAbreak = false;
+    public static boolean loser = false;
+    public static boolean winner = false;
     public static int newRound = 4;
+    public int lastRound;
     Ship ship;
     ArrayList<Bullet> bullets = new ArrayList<>();
     ArrayList<Asteroid> asteroids = new ArrayList<>();
@@ -15,6 +21,7 @@ public class Game {
     public int score = 0;
     public Game(){
         this.ship = new Ship(this);
+        this.lastRound = 3;
     }
 
     public void update(){
@@ -43,6 +50,13 @@ public class Game {
         if(this.ship.alive && (this.asteroids.size() == 0)&&!this.takeAbreak) {
             if(this.newRound==4){
                    this.takeAbreak = true;
+                if(this.num_asteroids==this.lastRound){
+                    WindowGame.sound.stop();
+                    Main.sound.loop(Clip.LOOP_CONTINUOUSLY);
+                    winner = true;
+                    Timer.game = false;
+                    return;
+                }
             }
             else{
                 this.num_asteroids += 2;
@@ -50,6 +64,11 @@ public class Game {
                     this.asteroids.add(new Large_Asteroid(this));
                 this.newRound=4;
             }
+        }
+        if(!this.ship.alive){
+            WindowGame.sound.stop();
+            Main.sound.loop(Clip.LOOP_CONTINUOUSLY);
+            loser = true;
         }
     }
 
@@ -70,6 +89,8 @@ public class Game {
                 if(this.ship.collision(asteroid)) {
                     asteroid.break_apart();
                     this.ship.alive = false;
+                    Loader.playSoundExplosion();
+                    Timer.game = false;
                     return;
                 }
             }
