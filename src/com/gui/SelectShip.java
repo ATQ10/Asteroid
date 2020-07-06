@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Clase encargada de mostrar la ventana de selección del nave
+ */
 public class SelectShip extends JFrame implements Runnable{
     public Container background;
     public JButton ship1Button;
@@ -31,7 +33,9 @@ public class SelectShip extends JFrame implements Runnable{
         this.thread = new Thread(this);
         this.thread.start();
     }
-
+    /**
+     * Metodo encargado de insertar los botones de opciones de nave y regresar
+     */
     private void insertButtons() {
         //Agregamos boton de nave 1
         ship1Button = new JButton();
@@ -125,7 +129,10 @@ public class SelectShip extends JFrame implements Runnable{
         });
 
     }
-
+    /**
+     * Metodo implementado de un hilo cuyo principal objetivo
+     * será dejar de disponer de la ventana de seleccion de nave
+     */
     @Override
     public void run() {
         SelectShip.close = false;
@@ -141,7 +148,9 @@ public class SelectShip extends JFrame implements Runnable{
         this.dispose();
     }
 
-
+    /**
+     * Clase encargada de colocar el fondo de la ventana de Seleccionar nave
+     */
     class Container extends JPanel
     {
         private Image image;

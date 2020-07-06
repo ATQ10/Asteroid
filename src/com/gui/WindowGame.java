@@ -10,7 +10,9 @@ import java.awt.image.BufferStrategy;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * Clase encargada de mostrar el juego, progreso y acciones interactivas.
+ */
 public class WindowGame extends JFrame implements Runnable{
     public static String skin;
     public static Clip sound;
@@ -53,6 +55,9 @@ public class WindowGame extends JFrame implements Runnable{
         this.setFocusable(true);
     }
 
+    /**
+     * Metodo encargado de cargar todos los elementos iniciales del juego.
+     */
     private void loadGame() {
         //Elegimos nuestro fondo
         try {
@@ -67,6 +72,9 @@ public class WindowGame extends JFrame implements Runnable{
         this.addKeyListener(this.keyBoard);
     }
 
+    /**
+     * Metodo encargado de reproducir el fondo sonoro del juego
+     */
     public void playSound(){
         try {
             Main.sound.stop();
@@ -82,11 +90,17 @@ public class WindowGame extends JFrame implements Runnable{
         }
     }
 
+    /**
+     * Metodo encargado de actualizar el juego y las teclas presionadas
+     */
     public void update(){
         this.keyBoard.update();
         this.game.update();
     }
 
+    /**
+     * Metodo encargado de dibujar todos los elementos dentro del canvas
+     */
     public void draw(){
         this.bs = this.canvas.getBufferStrategy();
         if(bs == null){
@@ -135,11 +149,19 @@ public class WindowGame extends JFrame implements Runnable{
         this.bs.show();
     }
 
+    /**
+     * Metodo encargado de realizar procesos como inicializador del juego
+     */
     public void init(){
         this.loadGame();
         this.playSound();
     }
 
+    /**
+     * Metodo implementado de un hilo encargado de controlar los ciclos lógicos
+     * del juego, permitiendo al usuario una interaccion fluida y sin sobrecargar el
+     * hilo principal
+     */
     @Override
     public void run() {
         long nowTime = 0;
@@ -173,13 +195,18 @@ public class WindowGame extends JFrame implements Runnable{
             this.dispose();
         this.stop();
     }
-
+    /**
+     * Metodo encargado de lanzar el hilo correspondiente al juego
+     */
     public void start(){
         this.thread = new Thread(this);
         this.thread.start();
         this.active = true;
     }
 
+    /**
+     * Metodo encargado de detener el hilo correspondiente al juego
+     */
     public void stop(){
         try {
             thread.join();

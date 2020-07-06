@@ -9,6 +9,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Clase encargada de cargar algunas imagenes estrategicas
+ * de los elementos dentro del juego y reproducción de sonidos
+ */
 public class Loader {
     public static BufferedImage speed = ImageLoader("/com/img/speed.png");
     public static BufferedImage count3 = ImageLoader("/com/img/count3.png");
@@ -23,6 +27,10 @@ public class Loader {
         }
         return null;
     }
+
+    /**
+     * Metodo encargado de respoducir un sonido cuando un boton es seleccionado
+     */
     public static void playSoundSelect(){
         try {
             Clip sound = AudioSystem.getClip();
@@ -36,6 +44,10 @@ public class Loader {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Metodo encargado de reproducir un sonido cuando la nave explota
+     */
     public static void playSoundExplosion(){
         try {
             Clip sound = AudioSystem.getClip();

@@ -2,12 +2,14 @@ package com.asteroids;
 
 import com.gui.Main;
 import com.gui.WindowGame;
+/**
+ * Clase principal de ejecución
+ * Integrantes:
+ * Mena Mondragón JoséEduardo
+ * Ocampo Calderon Loredana Paulette
+ * Tejeda Arnoldo
+ */
 
-//Favor de agregar su nombre para indicar que se tiene control del
-// las versiones del repositorio:D
-// * Ocampo Calderon Loredana Paulette (MusaDeSaturno) :3
-// *
-// * Tejeda Arnoldo (ATQ10)
 public class AsteroidsGame {
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 600;

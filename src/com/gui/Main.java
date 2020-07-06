@@ -15,6 +15,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Clase encargada de mostrar el menu principal
+ */
 public class Main extends JFrame {
     public static Clip sound;
     public menuPrincipal menu;
@@ -34,6 +37,9 @@ public class Main extends JFrame {
         playSound();
     }
 
+    /**
+     * Metodo encargado de insertar los botones de jugar y creditos
+     */
     private void insertButtons() {
         //Agregamos boton de play
         playButton = new JButton();
@@ -79,8 +85,9 @@ public class Main extends JFrame {
             }
         });
     }
-
-
+    /**
+     * Clase encargada de colocar el fondo de la ventana de menu
+     */
     class menuPrincipal extends JPanel
     {
         private Image image;
@@ -95,7 +102,9 @@ public class Main extends JFrame {
             super.paint(g);
         }
     }
-
+    /**
+     * Metodo encargado de reproducir el fondo sonoro principal
+     */
     public void playSound(){
         try {
             sound = AudioSystem.getClip();

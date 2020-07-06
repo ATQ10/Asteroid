@@ -7,7 +7,11 @@ import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-
+/**
+ * Clase Game es la encargada de proporcionar todos los datos referentes al juego
+ * puesto que guarda los elementos (nave, asteroides, descansos) y sus respectivas
+ * propiedades
+ */
 public class Game {
     public static boolean takeAbreak = false;
     public static boolean loser = false;
@@ -23,7 +27,10 @@ public class Game {
         this.ship = new Ship(this);
         this.lastRound = 3;
     }
-
+    /**
+     * Metodo encargado de actualizar los datos del juego
+     * actualizando las propiedades de los objetos
+     */
     public void update(){
         //Ship
         this.ship.update();
@@ -72,6 +79,11 @@ public class Game {
         }
     }
 
+    /**
+     * Metodo encargado de verificar las colisiones entre los asteroides
+     * y los rayos lacers, ademas de verificar la colición de la nave
+     * con algun asteroide.
+     */
     private void collisions() {
         if(this.bullets.size()>0) {
             for (int i=0;i<this.bullets.size();i++)
@@ -97,6 +109,10 @@ public class Game {
         }
     }
 
+    /**
+     * Metodo encargado de dibujar los elementos en el canvas
+     * @param g
+     */
     public void draw(Graphics g){
         if(this.ship.alive) {
             for (Bullet bullet : this.bullets)
@@ -110,6 +126,10 @@ public class Game {
             coutNewRound(g);
     }
 
+    /**
+     * Metodo encargado de dibujar el conteo regresivo 3, 2, 1, ¡Fuego!
+     * @param g
+     */
     private void coutNewRound(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform at;

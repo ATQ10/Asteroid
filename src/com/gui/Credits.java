@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Clase encargada de mostrar los creditos del juego
+ */
 public class Credits extends JFrame implements Runnable{
     public Container background;
     public JButton retButton;
@@ -28,6 +31,9 @@ public class Credits extends JFrame implements Runnable{
         this.thread.start();
     }
 
+    /**
+     * Metodo encargado de insertar el boton de regresar
+     */
     private void insertButtons() {
         //Agregamos boton regresar
         retButton = new JButton();
@@ -52,6 +58,10 @@ public class Credits extends JFrame implements Runnable{
 
     }
 
+    /**
+     * Metodo implementado de un hilo cuyo principal objetivo
+     * será dejar de disponer de la ventana de creditos
+     */
     @Override
     public void run() {
         Credits.close = false;
@@ -67,6 +77,9 @@ public class Credits extends JFrame implements Runnable{
         this.dispose();
     }
 
+    /**
+     * Clase encargada de colocar el fondo de la ventana de creditos
+     */
     class Container extends JPanel
     {
         private Image image;
