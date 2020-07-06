@@ -1,5 +1,8 @@
 package com.asteroids;
 
+/**
+ * Clase para manejo de velocidad
+ */
 public class Velocity {
     public double dx;
     public double dy;
@@ -9,6 +12,10 @@ public class Velocity {
         this.dy = 0;
     }
 
+    /**
+     * Metodo para mantener velocidad maxima en los objetos del juego.
+     * @param max
+     */
     public void limit(double max){
         if(this.dx > max)
             this.dx = max;

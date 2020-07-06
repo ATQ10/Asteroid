@@ -5,6 +5,9 @@ import com.gui.WindowGame;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+/**
+ * Clase Ship para la creacion de instancias de objetos de tipo nave.
+ */
 public class Ship extends Flying_Obj{
     // public String sound;
     public final double TURN_AMOUNT = Math.toRadians(3);
@@ -21,12 +24,23 @@ public class Ship extends Flying_Obj{
         this.game = game;
     }
 
+    /**
+     * Metodo para rotar nave hacia lado izquierdo.
+     */
     public void left() { this.angle -= TURN_AMOUNT; }
 
+    /**
+     * Metodo para rotar nave hacia lado derecho
+     */
     public void right() {
         this.angle += TURN_AMOUNT;
     }
 
+    /**
+     * Metodo para incremento o decremento de velocidad
+     * de la nave con manejo de teclas up y down
+     * @param isUp
+     */
     public void thrust(Boolean isUp) {
 
         if(isUp) {
@@ -39,6 +53,11 @@ public class Ship extends Flying_Obj{
         }
     }
 
+    /**
+     * Metodo para actualizacion de catual estado de la nave,
+     * disparo, si esta viva, movimiento, asi como tambien
+     * la velocidd actual.
+     */
     @Override
     public void update() {
         if(this.alive) {
@@ -62,7 +81,12 @@ public class Ship extends Flying_Obj{
     }
 
 
-
+    /**
+     * Metodo de dibujo para la nave, asi como tambien de otros graficos
+     * como lo son los propulsores de la nave de acuerto a la direccion
+     * de rotacion o incremento de velocidad.
+     * @param g
+     */
     @Override
     public void draw(Graphics g) {
         this.advance();
@@ -88,7 +112,11 @@ public class Ship extends Flying_Obj{
         g2d.drawImage(texture,this.at,null);
     }
 
-
+    /**
+     * Metodo para checar colisiones de la nave con algun asteroide.
+     * @param asteroid
+     * @return true o false de acuerdo a si hubo o no una colision.
+     */
     public boolean collision(Asteroid asteroid) {
         return asteroid.getBounds().intersects(this.getBounds());
     }

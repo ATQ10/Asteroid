@@ -20,12 +20,23 @@ public class Medium_Asteroid extends Asteroid{
         this.game = game;
         this.points = 3;
     }
+
+    /**
+     * Metodo de avance para nuestro asteroide por
+     * su tipo (MEDIANO)
+     */
     @Override
     public void advance() {
         super.advance();
         this.angle += ROCK_SPIN;
     }
 
+    /**
+     * Metodo para especificar proceso a seguir posterior a la colision
+     * del asteroide con algun otro objeto. En este caso por ser un asteroide
+     * mediano al momento de la colision genera otros nuevos asteroides
+     * de tipo PEQUEÑO y el actual asteroide ponemos su atributo de vida en falso.
+     */
     @Override
     public void break_apart() {
         Small_Asteroid small1 = new Small_Asteroid(game);

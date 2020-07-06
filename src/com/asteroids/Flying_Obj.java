@@ -12,6 +12,10 @@ import java.io.IOException;
 
 //import static com.sun.webkit.graphics.GraphicsDecoder.drawImage;
 
+/**
+ * Clase abstracta para todo objecto que sea volador
+ * balas, asteroides y nave en este caso.
+ */
 abstract class Flying_Obj{
     protected BufferedImage texture;
     protected AffineTransform at;
@@ -29,6 +33,13 @@ abstract class Flying_Obj{
     public static final int WIDTH = 0; // Sustituir por ancho en caso de ser necesario
     public static final int HEIGHT = 0; // Sustituir por ancho en caso de ser necesario
 
+    /**
+     * Constructor donde definimos todos los atributos esenciales de un
+     * objeto volador, e inicializamos los mismos para su posterior
+     * implementacion en otras clases hija.
+     * @param img
+     * @param radius
+     */
     public Flying_Obj(String img, int radius) {
         this.velocity = new Velocity();
         this.center = new PointDouble();
@@ -42,14 +53,28 @@ abstract class Flying_Obj{
         this.height = this.texture.getHeight();
     }
 
+    /**
+     * Metodo basico a base de coordenadas para poder crear el
+     * movimiento de nuestro objeto. Asi mismo previo a
+     * crear este movimiento, hacemos llamada al metodo wrapping
+     * el cual manejara que los objetos no salgan de la ventana.
+     */
     public void advance() {
         this.wrapping();
         this.center.x += this.velocity.dx;
         this.center.y += this.velocity.dy;
     }
 
+    /**
+     * Metodo update que actualizara valores de atributos posterior
+     * a que los objetos sean dibujados o avanzados
+     */
     public abstract void update();
 
+    /**
+     * Metodo para dibujar los graficos del objeto en pantalla
+     * @param g
+     */
     public abstract void draw(Graphics g);
 /*
     public void draw(Graphics2D g2,JPanel panel) {
@@ -62,6 +87,12 @@ abstract class Flying_Obj{
     }
 */
 
+    /**
+     * Metodo para garantizar que los objetos no salgan de pantalla.
+     * Si algun objeto llega a chocar o salir de algun borde de la pantalla,
+     * este aparecera del lado contrario del borde del cual salio, para asi
+     * cumplir con ese objetivo.
+     */
     public void wrapping() {
         if(this.center.x > AsteroidsGame.SCREEN_WIDTH) {
             this.center.x -= AsteroidsGame.SCREEN_WIDTH;
@@ -76,6 +107,12 @@ abstract class Flying_Obj{
             this.center.y += AsteroidsGame.SCREEN_HEIGHT;
         }
     }
+
+    /**
+     * Metodo para obtener un nuevo rectangulo con las medidas necesarias
+     * para saber el borde de nuestro objeto
+     * @return
+     */
     public Rectangle getBounds() {
         return new Rectangle((int)this.center.x, (int)this.center.y, this.width, this.height);
     }

@@ -10,7 +10,10 @@ import java.awt.geom.AffineTransform;
 import java.io.File;
 import java.io.IOException;
 
-
+/**
+ * Clase para crear instancias de balas, las cuales son disparadas
+ * por la nave
+ */
 public class Bullet extends Flying_Obj{
     public int life;
     // public String laserSound;
@@ -26,6 +29,11 @@ public class Bullet extends Flying_Obj{
         fire();
     }
 
+    /**
+     * Metodo para manejo del disparo de la bala,
+     * incremento de velocidad, asi como de calculo de angulos
+     * para calcular la direccion del disparo
+     */
     public void fire() {
         try {
             Clip sound = AudioSystem.getClip();
@@ -42,6 +50,12 @@ public class Bullet extends Flying_Obj{
         this.velocity.dy -= Math.cos(this.angle) * this.speed;
     }
 
+    /**
+     * Metodo para hacer que nuestra bala avanze y tenga movimiento.
+     * En el chacamos si la bala aun esta viva y tambien metemos un
+     * algoritmo para garantizar de que esta muera despues de cierto
+     * tiempo si es que no choco con algun objeto.
+     */
     public void advance() {
         super.advance();
         this.life -= 1;
@@ -62,6 +76,11 @@ public class Bullet extends Flying_Obj{
 
  */
 
+    /**
+     * Sobreescribimos metodo de dibujo para poder
+     * dibijar nuestra bala en panatalla
+     * @param g
+     */
     @Override
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -73,11 +92,19 @@ public class Bullet extends Flying_Obj{
         g2d.drawImage(texture,this.at,null);
     }
 
+    /**
+     * Sobreescribimos metodo de actualizar para el movimiento
+     */
     @Override
     public void update() {
         this.advance();
     }
 
+    /**
+     * Metodo para saber si nuestra bala a colisionado con un asteroide
+     * @param asteroid
+     * @return true o false de acuerdo a si hubo una colision
+     */
     public boolean collision(Asteroid asteroid) {
         return asteroid.getBounds().intersects(this.getBounds());
     }
